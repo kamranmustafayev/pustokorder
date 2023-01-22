@@ -1,0 +1,16 @@
+﻿@model Genre
+<div class="container-fluid">
+	<div class="card">
+		<div class="card-header">
+			<h2 class="text-primary">Confirmation</h2>
+		</div>
+		<div class="card-body">
+			<form method="post" action="delete">
+				<p class="text-danger">You're trying to delete the model [ID: @Model.Id].</p>
+				<p>Click <span class="text-danger">Delete</span> to confirm the process or click <span class="text-secondary">Cancel</span> to go back.</p>
+				<input type="hidden" asp-for="Id" value="@Model.Id" />
+				<button type="submit" class="btn btn-danger">Delete</button> <a asp-action="index" class="btn btn-outline-secondary">Cancel</a>
+			</form>
+		</div>
+	</div>
+</div>

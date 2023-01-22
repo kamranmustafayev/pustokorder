@@ -1,0 +1,56 @@
+﻿@model List<BasketItemVM>
+@{
+	double price = 0;
+	double total = 0;
+	double count = 0;
+	foreach (BasketItemVM item in Model)
+	{
+		price = item.Book.SellPrice * (1 - item.Book.Discount / 100) * item.Count;
+		total += price;
+		count += item.Count;
+	}
+}
+<div class="cart-total">
+	<span id="cartCount" class="text-number">
+		@count
+	</span>
+	<span class="text-item">
+		Shopping Cart
+	</span>
+	<span class="price">
+		₼<span id="cartTotal">@total.ToString("0.00")</span>
+		<i class="fas fa-chevron-down"></i>
+	</span>
+</div>
+<div class="cart-dropdown-block">
+	<div class=" single-cart-block ">
+		@foreach (BasketItemVM item in Model)
+		{
+			price = item.Book.SellPrice * (1 - item.Book.Discount / 100) * item.Count;
+			<div class="cart-product">
+				<a asp-controller="book" asp-action="details" asp-route-id="@item.Book.Id" class="image">
+					<img src="~/uploads/images/books/@item.Book.BookImages.FirstOrDefault(bi => bi.IsPoster == true).ImageUrl" alt="">
+				</a>
+				<div class="content">
+					<h3 class="title">
+						<a asp-controller="book" asp-action="details" asp-route-id="@item.Book.Id">
+							@item.Book.Name
+						</a>
+					</h3>
+					<p class="price"><span class="qty"><span id="bookCount">@item.Count</span> ×</span> ₼<span id="bookPrice">@price.ToString("0.00")</span></p>
+					<a asp-controller="cart" asp-action="deletefromblock" asp-route-bookId="@item.Book.Id" class="cross-btn btn-deletebook"><i class="fas fa-times"></i></a>
+				</div>
+			</div>
+		}
+	</div>
+	<div class=" single-cart-block ">
+		<div class="btn-block">
+			<a asp-controller="cart" asp-action="index" class="btn">
+				View Cart <i class="fas fa-chevron-right"></i>
+			</a>
+			<a asp-controller="cart" asp-action="checkout" class="btn btn--primary">
+				Check Out <i class="fas fa-chevron-right"></i>
+			</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,25 @@
+﻿@model AccountBlockVM
+
+@if (Model.UserInfo is null)
+{
+	<a asp-controller="account" asp-action="login" class="font-weight-bold">Login</a>
+	<br>
+	<span>or</span>
+	<a asp-controller="account" asp-action="register">Register</a>
+}
+else
+{
+	<div class="dropdown">
+		<a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			@Model.UserInfo.FullName
+		</a>
+
+		<ul class="dropdown-menu">
+			@if (Model.Roles.Contains("Admin") || Model.Roles.Contains("Superadmin"))
+			{
+				<li><a class="dropdown-item" asp-area="manage" asp-controller="dashboard">Manage</a></li>
+			}
+			<li><a class="dropdown-item" asp-controller="account" asp-action="logout">Log out</a></li>
+		</ul>
+	</div>
+}

@@ -1,0 +1,18 @@
+﻿@model BrandUpdateVM
+
+<div class="container-fluid">
+    <h2 class="text-primary mb-2">Update brand</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="update" enctype="multipart/form-data">
+                <label asp-for="Queue">Queue:</label>
+                <input asp-for="Queue" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Queue"></span></div>
+                <label asp-for="ImageFile">Image:</label>
+                <input asp-for="ImageFile" class="form-control mb-2" />
+                <div><span class="text-danger" asp-validation-for="ImageFile"></span></div>
+                <button type="submit" class="btn btn-success btn-lg">Update</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+﻿@model BookUpdateVM
+@{
+    List<BookImage> images = ViewBag.Images;
+    BookImage posterImg = images.FirstOrDefault(bi => bi.IsPoster == true);
+    BookImage hoverImg = images.FirstOrDefault(bi => bi.IsPoster == false);
+    List<BookImage> addImgs = images.FindAll(bi => bi.IsPoster == null);
+}
+<div class="container-fluid">
+    <h2 class="text-primary mb-2">Update book</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="update" enctype="multipart/form-data">
+                <label asp-for="Name">Book Name:</label>
+                <input asp-for="Name" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Name"></span></div>
+                <label asp-for="CostPrice">Cost Price:</label>
+                <input asp-for="CostPrice" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="CostPrice"></span></div>
+                <label asp-for="SellPrice">Sell Price:</label>
+                <input asp-for="SellPrice" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="SellPrice"></span></div>
+                <label asp-for="Discount">Discount percentage:</label>
+                <input asp-for="Discount" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Discount"></span></div>
+                <label asp-for="ProductCode">Product Code:</label>
+                <input asp-for="ProductCode" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="ProductCode"></span></div>
+                <label asp-for="Description">Description:</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <div><span class="text-danger" asp-validation-for="Description"></span></div>
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="PosterImageFile">Poster Image:</label>
+                        <div class="m-2"><a target="_blank" href="~/uploads/images/books/@posterImg.ImageUrl"><img src="~/uploads/images/books/@posterImg.ImageUrl" style="height:50px;" /></a></div>
+                        <input asp-for="PosterImageFile" class="form-control" />
+                        <div><span class="text-danger" asp-validation-for="PosterImageFile"></span></div>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="HoverImageFile">Hover Image:</label>
+                        <div class="m-2"><a target="_blank" href="~/uploads/images/books/@hoverImg.ImageUrl"><img src="~/uploads/images/books/@hoverImg.ImageUrl" style="height:50px;" /></a></div>
+                        <input asp-for="HoverImageFile" class="form-control" />
+                        <div><span class="text-danger" asp-validation-for="HoverImageFile"></span></div>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="ImageFiles">Additional Images:</label>
+                        <div class="row">
+                            @foreach(BookImage image in addImgs)
+                            {
+                                <div class="col-2 d-flex justify-content-center border m-2">
+                                    <div>
+                                        <a class="btn btn-danger btn-sm btn-delete-image">Delete</a>
+                                        <a target="_blank" href="~/uploads/images/books/@image.ImageUrl">
+                                            <img src="~/uploads/images/books/@image.ImageUrl" style="height:60px;" />
+                                        </a>
+                                    </div>
+                                    <input type="hidden" name="BookImageIds" value="@image.Id">
+                                </div>
+                            }
+                        </div>
+                        <input asp-for="ImageFiles" class="form-control" />
+                        <div><span class="text-danger" asp-validation-for="ImageFiles"></span></div>
+                    </div>
+                </div>
+                <label asp-for="GenreId">Genre:</label>
+                <select asp-for="GenreId" asp-items="@(new SelectList(ViewBag.Genres, "Id", "Name"))" class="form-control"></select>
+                <div><span class="text-danger" asp-validation-for="GenreId"></span></div>
+                <label asp-for="AuthorId">Author:</label>
+                <select asp-for="AuthorId" asp-items="@(new SelectList(ViewBag.Authors, "Id", "FullName"))" class="form-control"></select>
+                <div><span class="text-danger" asp-validation-for="GenreId"></span></div>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <input asp-for="IsAvailable" class="form-check-input ms-5" />
+                        <label class="form-check-label" asp-for="IsAvailable">Is Available</label>
+                        <div><span class="text-danger" asp-validation-for="IsAvailable"></span></div>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="IsFeatured" class="form-check-input ms-5" />
+                        <label class="form-check-label" asp-for="IsFeatured">Is Featured</label>
+                        <div><span class="text-danger" asp-validation-for="IsFeatured"></span></div>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="IsNew" class="form-check-input ms-5" />
+                        <label class="form-check-label" asp-for="IsNew">Is New</label>
+                        <div><span class="text-danger" asp-validation-for="IsNew"></span></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg mt-3">Update</button>
+            </form>
+        </div>
+    </div>
+
+</div>

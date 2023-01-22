@@ -1,0 +1,35 @@
+﻿@model SliderUpdateVM
+
+<div class="container-fluid">
+    <h2 class="text-primary mb-2">Update slider</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="update" enctype="multipart/form-data">
+                <label asp-for="Title1">Title 1:</label>
+                <input asp-for="Title1" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Title1"></span></div>
+                <label asp-for="Title2">Title 2:</label>
+                <input asp-for="Title2" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Title2"></span></div>
+                <label asp-for="RedirectUrl">Redirect URL:</label>
+                <input asp-for="RedirectUrl" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="RedirectUrl"></span></div>
+                <label asp-for="ButtonText">Button text:</label>
+                <input asp-for="ButtonText" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="ButtonText"></span></div>
+                <label asp-for="Description">Description:</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <div><span class="text-danger" asp-validation-for="Description"></span></div>
+                <label asp-for="Queue">Queue:</label>
+                <input asp-for="Queue" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="Queue"></span></div>
+                <label asp-for="ImageFile">Background Image:</label>
+                <div class="m-2"><a target="_blank" href="~/uploads/images/sliders/@Model.ImageUrl"><img src="~/uploads/images/sliders/@Model.ImageUrl" style="height:50px;" /></a></div>
+                <input asp-for="ImageFile" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="ImageFile"></span></div>
+                <button type="submit" class="btn btn-success mt-3">Update</button>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,15 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using PustokProj.DAL;
+global using PustokProj.ViewModels.AccountVMs;
+global using PustokProj.ViewModels.BasketVMs;
+global using PustokProj.ViewModels.BookVMs;
+global using PustokProj.ViewModels.SliderVMs;
+global using PustokProj.ViewModels.BrandVMs;
+global using PustokProj.ViewModels.CartVMs;
+global using PustokProj.ViewModels.HeaderVMs;
+global using PustokProj.ViewModels.HomeVMs;
+global using PustokProj.Models;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Authorization;

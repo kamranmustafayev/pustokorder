@@ -1,0 +1,22 @@
+﻿@model Feature
+
+<div class="container-fluid">
+    <h2 class="text-primary mb-2">Create feature</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="create">
+                <label asp-for="Title">Title:</label>
+                <input asp-for="Title" class="form-control mb-1" />
+                <div><span class="text-danger" asp-validation-for="Title"></span></div>
+                <label asp-for="Description">Description:</label>
+                <input asp-for="Description" class="form-control mb-1" />
+                <div><span class="text-danger" asp-validation-for="Description"></span></div>
+                <label asp-for="Icon">Icon:</label>
+                <input asp-for="Icon" class="form-control mb-2" />
+                <div><span class="text-danger" asp-validation-for="Icon"></span></div>
+                <button type="submit" class="btn btn-success btn-lg">Create</button>
+            </form>
+        </div>
+    </div>
+
+</div>

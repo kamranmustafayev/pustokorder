@@ -1,0 +1,16 @@
+﻿@model Author
+
+<div class="container-fluid">
+    <h2 class="text-primary mb-2">Create author</h2>
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" asp-action="create">
+                <label asp-for="FullName">Full Name:</label>
+                <input asp-for="FullName" class="form-control" />
+                <div><span class="text-danger" asp-validation-for="FullName"></span></div>
+                <button type="submit" class="btn btn-success btn-lg">Create</button>
+            </form>
+        </div>
+    </div>
+
+</div>
