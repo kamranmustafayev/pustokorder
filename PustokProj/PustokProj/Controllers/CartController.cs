@@ -248,6 +248,7 @@ namespace PustokProj.Controllers
         public async Task<IActionResult> Order(OrderCM orderCM)
         {
             AppUser user = null;
+            List<UserBasketItem> userBasketItems = null;
             if (User.Identity.IsAuthenticated)
                 user = await _userManager.FindByNameAsync(User.Identity.Name);
             List<BasketItemVM> basketItems = new List<BasketItemVM>();
@@ -267,9 +268,23 @@ namespace PustokProj.Controllers
             }
             else
             {
-
+                userBasketItems = _context.UserBasketItems.Include(bi => bi.User).Include(bi => bi.Book).Where(bi => bi.User == user).ToList();
+				foreach (var item in userBasketItems)
+                {
+                    BasketItemVM bookItem = new BasketItemVM { Book = item.Book, Count = item.Count };
+                    basketItems.Add(bookItem);
+                }
             }
             orderCM.BasketItemVMs = basketItems;
+            if (!ModelState.IsValid)
+            {
+                return View("Checkout", orderCM);
+            }
+            if (orderCM.BasketItemVMs.Count == 0)
+            {
+                ModelState.AddModelError("", "Your cart is empty.");
+                return View("Checkout", orderCM);
+            }
             Order order = new Order
             {
                 FullName = orderCM.FullName,
@@ -284,8 +299,17 @@ namespace PustokProj.Controllers
                 OrderedAt = DateTime.UtcNow.AddHours(4),
                 UserId = user?.Id
             };
-
-            return View("Checkout", orderCM);
+            _context.Orders.Add(order);
+            foreach (var item in orderCM.BasketItemVMs)
+            {
+                if (_context.Books.Find(item.Book.Id) is null) return BadRequest();
+                OrderItem orderItem = new OrderItem { Book = item.Book, BookName = item.Book.Name, CostPrice = item.Book.CostPrice, Discount = item.Book.Discount, SellPrice = item.Book.SellPrice, Count = item.Count, Order = order };
+                _context.OrderItems.Add(orderItem);
+                if (user is null) HttpContext.Response.Cookies.Delete("BasketList");
+                else _context.UserBasketItems.RemoveRange(userBasketItems);
+			}
+            _context.SaveChanges();
+            return RedirectToAction("Checkout");
         }
     }
 }
